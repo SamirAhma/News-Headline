@@ -4,7 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // Set the initial count state to zero, 0
   const [count, setCount] = useState(0);
-  const [headline, setHeadline] = useState([
+
+  const [loaded, setLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const headline = [
     { title: "Headlines in the US ", country: "us", category: "", q: "" },
 
     { title: "BBC News Headlines ", country: "us", category: "", q: "cnn" },
@@ -20,34 +23,44 @@ function App() {
       category: "",
       q: "trump",
     },
-  ]);
-  const [loaded, setLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-
+  ];
   // Create handleIncrement event handler
   const handleIncrement = () => {
-    var i =
-      count + 1 < headline.length
-        ? setCount((prevCount) => prevCount + 1)
-        : setCount((prevCount) => (prevCount = 0));
+    // var i =
+    count + 1 < headline.length
+      ? setCount((prevCount) => prevCount + 1)
+      : setCount((prevCount) => (prevCount = 0));
   };
 
-  //Create handleDecrement event handler
-
   useEffect(() => {
-    fetch(
-      `https://newsapi.org/v2/top-headlines?country=${headline[count].country}&q=${headline[count].q}&catergor=${headline[count].category}&apiKey=80ba3b1ab636411e819ecdb5360a114e`
-    )
-      // fetch(
-      //   `https://newsapi.org/v2/top-headlines?country=us&apiKey=80ba3b1ab636411e819ecdb5360a114e`
-      // )
-      .then((res) => res.json())
-      .then((json) => {
-        setItems(json);
-        setLoaded(true);
-      });
+    const getData = async () => {
+      const headline = [
+        { title: "Headlines in the US ", country: "us", category: "", q: "" },
 
-    console.log(items);
+        { title: "BBC News Headlines ", country: "us", category: "", q: "cnn" },
+        {
+          title: "Business Headlines from Germany ",
+          country: "gr",
+          category: "business",
+          q: "",
+        },
+        {
+          title: " Top Trump Headlines",
+          country: "us",
+          category: "",
+          q: "trump",
+        },
+      ];
+
+      const response = await fetch(
+        `https://newsapi.org/v2/top-headlines?country=${headline[count].country}&q=${headline[count].q}&catergor=${headline[count].category}&apiKey=80ba3b1ab636411e819ecdb5360a114e`
+      );
+      const data = await response.json();
+      setItems(data);
+      setLoaded(true);
+    };
+
+    getData();
   }, [count]);
 
   if (!loaded) {
