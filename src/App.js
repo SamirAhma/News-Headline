@@ -63,40 +63,40 @@ function App() {
     getData();
   }, [count]);
 
-  // if (!loaded) {
-  //   return <div>Loading...</div>;
-  // } else {
-  return (
-    <div className="container">
-      <div className="row mb-5 mt-5">
-        <div className="col-md-6">
-          <span>{headline[count].title}</span>
-        </div>
-        <div className="col-md-6">
-          <button onClick={handleIncrement} className="btn btn-primary ">
-            Change
-          </button>
-        </div>
-      </div>
-
-      <div>
-        {items.articles.map((item) => (
-          <div className="responsive" key={item.urlToImage}>
-            <div className="gallery">
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={item.urlToImage}
-              >
-                <img src={item.urlToImage} alt={item.title} />
-              </a>
-            </div>
+  if (!loaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="container">
+        <div className="row mb-5 mt-5">
+          <div className="col-md-6">
+            <span>{headline[count].title}</span>
           </div>
-        ))}
+          <div className="col-md-6">
+            <button onClick={handleIncrement} className="btn btn-primary ">
+              Change
+            </button>
+          </div>
+        </div>
+
+        <div>
+          {items.articles.map((item) => (
+            <div className="responsive" key={item.urlToImage}>
+              <div className="gallery">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={item.urlToImage}
+                >
+                  <img src={item.urlToImage} alt={item.title} />
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-  // }
+    );
+  }
 }
 
 export default App;
